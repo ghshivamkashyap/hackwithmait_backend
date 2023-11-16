@@ -22,7 +22,7 @@ try {
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://hackwithmaitbackend-production.up.railway.app",
+    origin: "*",
     credentials: true,
   })
 );
