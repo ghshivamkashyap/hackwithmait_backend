@@ -38,7 +38,7 @@ exports.addProduct = async (req, res) => {
     const data = req.body;
 
     // Validate data against the schema
-    const product = new Product({
+    const product = new Products({
       pid: data.pid,
       name: data.name,
       mrp: data.mrp,
