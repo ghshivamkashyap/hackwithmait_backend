@@ -36,14 +36,28 @@ exports.getProductById = async (req, res) => {
 exports.addProduct = async (req, res) => {
   try {
     const data = req.body;
-    console.log(data);
 
-    await Products.create({
+    // Validate data against the schema
+    const product = new Product({
       pid: data.pid,
       name: data.name,
       mrp: data.mrp,
       currprice: data.currprice,
     });
+
+    const validationError = product.validateSync();
+
+    if (validationError) {
+      console.error("Validation error:", validationError.errors);
+      return res.status(400).json({
+        iserror: true,
+        message: "Validation error",
+        errors: validationError.errors,
+      });
+    }
+
+    // Save the product to the database
+    await product.save();
 
     return res.status(200).json({
       iserror: false,
