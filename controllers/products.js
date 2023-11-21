@@ -40,7 +40,7 @@ exports.addProduct = async (req, res) => {
 
     await Products.create({
       pid: data.pid,
-      name: data.name, 
+      name: data.name,
       mrp: data.mrp,
       currprice: data.currprice,
     });
@@ -80,10 +80,10 @@ exports.genrateBiill = async (req, res) => {
       mrp = mrp + item.mrp;
       console.log(item);
     }
-    console.log(pIds)
+    console.log(pIds);
 
     const bill = new Bill({
-      pIds:pIds,
+      pIds: pIds,
       products: productArr,
       totalPrice: total,
       mrp: mrp,
@@ -103,6 +103,36 @@ exports.genrateBiill = async (req, res) => {
     return res.status(400).json({
       iserror: true,
       message: "internal server error",
+    });
+  }
+};
+
+exports.securityCheck = async (req, res) => {
+  try {
+    const id = req.params.billId;
+    console.log(id);
+    const response = await Bill.findOne({ _id: id });
+    console.log(response);
+
+    if (response) {
+      return res.status(200).json({
+        iserror: false,
+        message: "success",
+        data: response,
+      });
+    } else {
+      return res.status(404).json({
+        iserror: true,
+        message: "Product not found",
+        // product: null,
+      });
+    }
+  } catch (error) {
+    console.error("Error durin security check: ", error);
+    return res.status(500).json({
+      iserror: true,
+      message: "Internal Server Error",
+      product: null,
     });
   }
 };
