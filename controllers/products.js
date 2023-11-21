@@ -40,7 +40,7 @@ exports.addProduct = async (req, res) => {
 
     await Products.create({
       pid: data.pid,
-      name: data.name, // Fix the typo here
+      name: data.name, 
       mrp: data.mrp,
       currprice: data.currprice,
     });
@@ -69,17 +69,21 @@ exports.genrateBiill = async (req, res) => {
     var total = 0;
     var mrp = 0;
     let productArr = [];
+    let pIds = [];
     console.log(items);
     for (var i = 0; i < items.length; i++) {
       const item = await Products.findOne({ pid: items[i] });
-      console.log(item.currprice, item.mrp); // Add this line to log values
-      productArr.push(item.pid);
+      // console.log(item.currprice, item.mrp); // Add this line to log values
+      productArr.push(item.name);
+      pIds.push(item.pid);
       total = total + item.currprice;
       mrp = mrp + item.mrp;
       console.log(item);
     }
+    console.log(pIds)
 
     const bill = new Bill({
+      pIds:pIds,
       products: productArr,
       totalPrice: total,
       mrp: mrp,
