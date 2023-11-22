@@ -33,16 +33,57 @@ exports.getProductById = async (req, res) => {
 };
 
 // add new product
+// exports.addProduct = async (req, res) => {
+//   try {
+//     const data = req.body;
+
+//     // Validate data against the schema
+//     const product = new Products({
+//       pid: data.pid,
+//       name: data.name,
+//       mrp: data.mrp,
+//       currprice: data.currprice,
+//     });
+
+//     const validationError = product.validateSync();
+
+//     if (validationError) {
+//       console.error("Validation error:", validationError.errors);
+//       return res.status(400).json({
+//         iserror: true,
+//         message: "Validation error",
+//         errors: validationError.errors,
+//       });
+//     }
+
+//     // Save the product to the database
+//     await product.save();
+
+//     return res.status(200).json({
+//       iserror: false,
+//       message: "Success, product added successfully",
+//     });
+//   } catch (error) {
+//     console.error("Error adding product:", error);
+//     return res.status(500).json({
+//       iserror: true,
+//       message: "Internal Server Error",
+//       product: null,
+//     });
+//   }
+// };
+
 exports.addProduct = async (req, res) => {
   try {
-    const data = req.body;
+    // const data = req.body;
+    const { pid, name, mrp, currprice } = req.params;
 
     // Validate data against the schema
     const product = new Products({
-      pid: data.pid,
-      name: data.name,
-      mrp: data.mrp,
-      currprice: data.currprice,
+      pid: pid,
+      name: name,
+      mrp: mrp,
+      currprice: currprice,
     });
 
     const validationError = product.validateSync();
