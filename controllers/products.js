@@ -89,7 +89,7 @@ exports.addProduct = async (req, res) => {
     console.log(name);
     console.log(pid);
     console.log(currprice);
-    return
+    // return
 
     const validationError = product.validateSync();
 
