@@ -85,6 +85,11 @@ exports.addProduct = async (req, res) => {
       mrp: mrp,
       currprice: currprice,
     });
+        console.log(pid);
+    console.log(name);
+    console.log(pid);
+    console.log(currprice);
+    return
 
     const validationError = product.validateSync();
 
